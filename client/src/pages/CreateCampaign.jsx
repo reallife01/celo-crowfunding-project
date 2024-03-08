@@ -17,7 +17,8 @@ const CreateCampaign = () => {
     description: '',
     target: '', 
     deadline: '',
-    image: ''
+    image: '',
+    email: ''
   });
 
   const handleFormFieldChange = (fieldName, e) => {
@@ -101,6 +102,13 @@ const CreateCampaign = () => {
             inputType="url"
             value={form.image}
             handleChange={(e) => handleFormFieldChange('image', e)}
+          />
+        <FormField 
+            labelName="Campaign email *"
+            placeholder="Place your email address of your campaign"
+            inputType="email"
+            value={form.email}
+            handleChange={(e) => handleFormFieldChange('email', e)}
           />
 
           <div className="flex justify-center items-center mt-[40px]">

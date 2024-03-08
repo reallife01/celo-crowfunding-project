@@ -1,11 +1,16 @@
 import React, { useContext, createContext } from 'react';
 
 import { useAddress, useContract, useMetamask, useContractWrite } from '@thirdweb-dev/react';
+import { CeloAlfajoresTestnet } from "@thirdweb-dev/chains";
 import { ethers } from 'ethers';
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
+  const sdk = new ThirdwebSDK(CeloAlfajoresTestnet, {
+    clientId: "b805402827599754d3363efb6daf7a1a",
+  });
   const { contract } = useContract('0x2D310A2fB5cAc4dBC968b5A27a2129725E4B31B6');
   const { mutateAsync: createCampaign } = useContractWrite(contract, 'createCampaign');
 
@@ -22,6 +27,7 @@ export const StateContextProvider = ({ children }) => {
 					form.target,
 					new Date(form.deadline).getTime(), // deadline,
 					form.image,
+          form.email,
 				],
 			});
 
@@ -32,6 +38,7 @@ export const StateContextProvider = ({ children }) => {
   }
 
   const getCampaigns = async () => {
+
     const campaigns = await contract.call('getCampaigns');
 
     const parsedCampaings = campaigns.map((campaign, i) => ({
@@ -42,6 +49,7 @@ export const StateContextProvider = ({ children }) => {
       deadline: campaign.deadline.toNumber(),
       amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
       image: campaign.image,
+      email: campaign.email,
       pId: i
     }));
 
@@ -49,6 +57,7 @@ export const StateContextProvider = ({ children }) => {
   }
 
   const getUserCampaigns = async () => {
+    
     const allCampaigns = await getCampaigns();
 
     const filteredCampaigns = allCampaigns.filter((campaign) => campaign.owner === address);
