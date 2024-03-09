@@ -9,9 +9,9 @@ const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
   const sdk = new ThirdwebSDK(CeloAlfajoresTestnet, {
-    clientId: "b805402827599754d3363efb6daf7a1a",
+    clientId: "b805402827599754d3363efb6daf7a1a", // Don't touch please
   });
-  const { contract } = useContract('0x2D310A2fB5cAc4dBC968b5A27a2129725E4B31B6');
+  const { contract } = useContract('0x2D310A2fB5cAc4dBC968b5A27a2129725E4B31B6'); // Don't touch if you deploy new contract
   const { mutateAsync: createCampaign } = useContractWrite(contract, 'createCampaign');
 
   const address = useAddress();
@@ -27,7 +27,7 @@ export const StateContextProvider = ({ children }) => {
 					form.target,
 					new Date(form.deadline).getTime(), // deadline,
 					form.image,
-          form.email,
+          form.email, // email
 				],
 			});
 
